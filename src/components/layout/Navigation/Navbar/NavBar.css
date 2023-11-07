@@ -1,0 +1,9 @@
+#homeNavBar {
+    height: 120px;
+    font-size: 1.4em;
+}
+
+.navItem {
+    border-right: 1px solid #e6e6e6;
+    padding: 0 15px;
+}
