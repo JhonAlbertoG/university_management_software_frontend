@@ -1,0 +1,12 @@
+.form-control {
+    padding: 8px 12px 8px 12px;
+    background: #FFFFFF;
+    color: #444444;
+    border-color: #D8D9DB;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 7px 0px 0px 7px;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: left;
+}

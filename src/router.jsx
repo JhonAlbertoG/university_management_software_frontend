@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
     },
     // We will ise this withut auth until the API and some basics views are set.
     {
-        path: "student/dashboard",
+        path: "/student/dashboard",
         element: <>Display dashboard based on user </>,
         children: [
             {
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
         // loader: requireAuth(['student', 'professor', 'admin', 'superadmin']),
     },
     {
-        path: "professor/dashboard",
+        path: "/professor/dashboard",
         element: <>Display dashboard based on user </>,
         children: [
             {
