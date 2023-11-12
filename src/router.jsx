@@ -3,8 +3,14 @@ import { createBrowserRouter } from "react-router-dom"
 import { requireAuth } from './utils/requireAuth';
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
-import Landing from './pages/Home/home'
-import ErrorPage from './pages/Errors/error_page'
+import Dashboard from "./pages/Dashboard/Dashboard";
+// Dashboard options
+// #TODO: implement the evaluation and grade pages 
+import Schedule from './components/Schedule/Schedule';
+import Settings from "./pages/Dashboard/Settings/Settings";
+
+import Landing from './pages/Home/home';
+import ErrorPage from './pages/Errors/error_page';
 
 export const router = createBrowserRouter([
     {
@@ -33,11 +39,11 @@ export const router = createBrowserRouter([
     // We will ise this withut auth until the API and some basics views are set.
     {
         path: "/student/dashboard",
-        element: <>Display dashboard based on user </>,
+        element: <Dashboard />,
         children: [
             {
                 path: "schedule",
-                element: <>Display the element that renders the schedule and subjects</>
+                element: <Schedule />
             },
             {
                 path: "grades",
@@ -45,7 +51,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "settings",
-                element: <>Display the element that renders the settings (like personal info management)</>
+                element: <Settings />
             }
 
         ],
@@ -53,7 +59,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/professor/dashboard",
-        element: <>Display dashboard based on user </>,
+        element: <Dashboard />,
         children: [
             {
                 path: "schedule",

@@ -1,4 +1,4 @@
-.form-control {
+/* .form-control {
     padding: 8px 12px 8px 12px;
     background: #FFFFFF;
     color: #444444;
@@ -9,4 +9,8 @@
     font-weight: 400;
     font-size: 18px;
     text-align: left;
+} */
+.form-container {
+    height: 100%;
+    overflow-y: auto;
 }

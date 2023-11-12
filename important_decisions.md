@@ -1,8 +1,107 @@
+## TODOs:
+(Miguel)
+```
+├─ university_management_software_backend
+   │  ├─ university_project_core
+   │  │  ├─ academicPrograms
+   │  │  │  ├─ academicProgram.py
+   │  │  │  │  └─ line 9: TODO : Make the neccesary validation of the field
+   │  │  │  ├─ academicProgramWithSubjects.py
+   │  │  │  │  └─ line 8: TODO : Left to implement this model
+   │  │  │  └─ changesInSubject.py
+   │  │  │     └─ line 9: TODO : Set the path of media in project university_project_core
+   │  │  ├─ groups
+   │  │  │  ├─ classModel.py
+   │  │  │  │  └─ line 5: TODO : We really need these fields, what aattributes or default alues could they have?
+   │  │  │  └─ group.py
+   │  │  │     └─ line 8: TODO : We will left both attributes as null-blank to be able to create either records with subject_id or extension_course_id.
+   │  │  ├─ subjects
+   │  │  │  ├─ grade.py
+   │  │  │  │  ├─ line 15: TODO : Add this validation '1.0 <= puntaje <= 5.0']
+   │  │  │  │  ├─ line 17: TODO : Add this validation 'si puntaje >= 3.0 -> APROBADO, demás REPROBADO ']
+   │  │  │  │  └─ line 20: TODO : Add this validation '0.0 <= porcentaje_en_grupo <= 1.0'
+   │  │  │  ├─ gradeGroup.py
+   │  │  │  │  ├─ line 13: TODO : Add this validation '1.0 <= puntaje <= 5.0']
+   │  │  │  │  ├─ line 15: TODO : Add this validation  'si puntaje >= 3.0 -> APROBADO, demás REPROBADO ']
+   │  │  │  │  └─ line 18: TODO : Add this validation '0.0 <= porcentaje_en_asignatura <= 1.0' ]
+   │  │  │  └─ subject.py
+   │  │  │     ├─ line 13: TODO : Add this validation -> "It must always be less than or equal to the number of semesters of the program to which it belongs."
+   │  │  │     └─ line 15: TODO : the values would be only the codes of the subjects, how can we do these?
+   │  │  ├─ university_project_core
+   │  │  │  └─ urls.py
+   │  │  │     └─ line 27: TODO : Why i in the holy fuck this isn showing in the swagger-ui?
+   │  │  └─ users
+   │  │     └─ user.py
+   │  │        └─ line 28: TODO : Check this
+   │  └─ important_dev_decisions.md
+   │     ├─ line 2: TODO #1 - When deleting records, we need to ensure that the delete process is also being performed in DB.
+   │     └─ line 3: TODO #2 - I quit (05-10 at 3:27 am) in gradeGroup model definition. Left subject and subjectWithGroupsOfGrades models, all serializer and viewspkgs for this models, and the last app, groups.
+   └─ university_management_software_frontend
+      ├─ components
+      │  ├─ Forms
+      │  │  ├─ Credentials
+      │  │  │  └─ Credential.jsx
+      │  │  │     ├─ line 1: TODO : Once the user is registered, we can redirect it to the dashboad (authenticated) page, according to its role
+      │  │  │     └─ line 59: TODO : Change this
+      │  │  └─ PersonalInfo
+      │  │     └─ PersonalInfo.jsx
+      │  │        ├─ line 1: TODO : Determine controlIDs for each form field, and then configure react-form
+      │  │        ├─ line 2: TODO : Determine the required files, and activate validation
+      │  │        └─ line 3: TODO : What do we think if we install this -> https://www.npmjs.com/package/react-phone-number-input ?
+      │  ├─ Menu
+      │  │  └─ SideMenu.jsx
+      │  │     └─ line 48: TODO : Change this url to match the one for students (grades) */}
+      │  ├─ Student
+      │  │  └─ StudentCard.jsx
+      │  │     └─ line 15: TODO : Set the email mailto: */}
+      │  ├─ Subject
+      │  │  └─ SubjectModal.jsx
+      │  │     ├─ line 43: TODO : Make this scrollable once we have data to fetch */}
+      │  │     └─ line 72: TODO Change this  and pagination when we have data to fetch */}
+      │  └─ layout
+      │     └─ AuthenticatedHeader.jsx
+      │        └─ line 24: TODO : Redesign this if possible */}
+      ├─ context
+      │  ├─ authContext.jsx
+      │  │  ├─ line 1: TODO : (MAIN) Once the basic views are set, and the API is correctly configured with authentication and basic information
+      │  │  ├─ line 12: TODO : Use this when the authentication process is more clear
+      │  │  └─ line 20: TODO : more optionsto distinguish roles
+      │  └─ useAuth.jsx
+      │     └─ line 1: TODO : Is this really neccesary, i mean, do we need to have it as a separate file?
+      ├─ pages
+      │  ├─ Auth
+      │  │  ├─ LoginForm.jsx
+      │  │  │  ├─ line 16: TODO : Añadir tipos de roles */}
+      │  │  │  └─ line 41: TODO : Install form handling module (react-form i think it was) */}
+      │  │  └─ Signup.jsx
+      │  │     └─ line 14: TODO : Can we make this hook as a module, in order to not repeat it between multiple files?
+      │  └─ Home
+      │     ├─ styles
+      │     │  └─ home.css
+      │     │     └─ line 11: TODO : Think about the style of this
+      │     └─ Home.jsx
+      │        └─ line 15: TODO : Add pagination
+      ├─ utils
+      │  └─ requireAuth.jsx
+      │     └─ line 5: TODO : Tu lógica para obtener el usuario actual y su rol, posiblemente del token en la sesión o cookie */;
+      └─ router.jsx
+         ├─ line 8: TODO : implement the evaluation and grade pages
+         ├─ line 18: TODO : Create landing page
+         ├─ line 22: TODO : Create login page
+         ├─ line 28: TODO : Create post page
+         ├─ line 32: TODO : Create signup page
+         └─ line 36: TODO : Create about page
 
+```
+
+## NOTAS IMPORTANTES
+
+1. Con respecto a la organización del proyecto y la manera de crear nuevos archivos, respetar la estructura propuesta.
+2. Hasta que no se implemente autenticación desde el backend, deberemos manejar rutas dedicadas para cada coonjunto de funcionalidades, por ejemplo, para ver las funciones del profesor. 
 
 <hr>
 
-## 3. Project's folder structure
+## 1. Project's folder structure
     
 Basado en el siguiente articulo (https://www.taniarascia.com/react-architecture-directory-structure/)[React Architecture: How to Structure and Organize a React Application], vamos a definir la estructura de archivos de la siguiente manera:
 

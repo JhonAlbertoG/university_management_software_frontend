@@ -1,0 +1,16 @@
+#page-container {
+    height: 100vh;
+}
+
+.dashboard-main-container {
+    background-color: #f3f3f3;
+}
+
+#dashboard-main-subcontainer {
+    margin: auto;
+    margin-top: 3%;
+    width: 80%;
+    height: 80%;
+    border-radius: 16px;
+    background-color: white;
+}

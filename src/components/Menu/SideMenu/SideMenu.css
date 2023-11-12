@@ -1,0 +1,45 @@
+#menu-container {
+    background-color: rgb(0, 0, 0);
+}
+
+#options>* {
+    background-color: transparent;
+    color: #8c8c8d;
+    font-size: 1.2em;
+    padding-left: 35px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* .schedule-icon-link .evaluation-icon-link .user-icon-link {
+    color: #8c8c8d !important;
+} */
+
+a {
+    text-decoration: none !important;
+    color: #8c8c8d !important;
+}
+
+label {
+    padding-left: 15px;
+}
+
+
+#logout-option-container {
+    height: 100px;
+    font-size: 1.2em;
+    color: #8c8c8d;
+    /* border-top: */
+}
+
+#logout-option {
+    border-top: solid 1px #444444;
+}
+
+/* .options>*:hover {
+    background-color: rgba(220, 220, 220, 0.238);
+} */
+
+/* #logout-option:hover {
+    background-color: rgba(220, 220, 220, 0.238);
+} */

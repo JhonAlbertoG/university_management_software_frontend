@@ -1,0 +1,18 @@
+#modal-body-container {
+    height: 60vh;
+}
+
+#modal-body-container:first-child {
+    height: 90%;
+}
+
+#schedule-summary {
+    height: 100%;
+    border: 1px solid #dadce0;
+    border-radius: 16px;
+
+}
+
+#students-list-header {
+    border-bottom: 1px solid #000;
+}
