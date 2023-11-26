@@ -12,6 +12,8 @@ import Settings from "./pages/Dashboard/Settings/Settings";
 import Landing from './pages/Home/home';
 import ErrorPage from './pages/Errors/error_page';
 
+import { rolesMappping } from "./utils/constants";
+
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -36,27 +38,55 @@ export const router = createBrowserRouter([
         path: "/about", // TODO: Create about page
         element: <>Route for signing up</>,
     },
-    // We will ise this withut auth until the API and some basics views are set.
     {
-        path: "/student/dashboard",
+        path: "/dashboard",
         element: <Dashboard />,
+        loader: requireAuth([rolesMappping.student, rolesMappping.professor]), // TODO: Add the rest of the roles, the ones that handle the chat administration
         children: [
             {
-                path: "schedule",
+                path: ":role/schedule",
                 element: <Schedule />
             },
             {
-                path: "grades",
-                element: <>Display the element that renders the student grades</>
+                path: ":role/grades", // Need to add a main component that handles conditional component rendirization based on roles
+                element: <>Display the element that renders the student grades/Evaluation</>
             },
             {
-                path: "settings",
+                // TODO: Add the data corrresponding to the user. This wil be shared among all the users.
+                path: ":role/settings",
                 element: <Settings />
             }
 
         ],
-        // loader: requireAuth(['student', 'professor', 'admin', 'superadmin']),
+
     },
+    {
+        path: "/unauthorized",
+        // element: <Unauthorized />,
+        element: <>Unauthorized</>,
+    },
+    // We will ise this withut auth until the API and some basics views are set.
+    // {
+    //     path: "/student/dashboard",
+    //     element: <Dashboard />,
+    //     children: [
+    //         {
+    //             path: "schedule",
+    //             element: <Schedule />
+    //         },
+    //         {
+    //             path: "grades",
+    //             element: <>Display the element that renders the student grades</>
+    //         },
+    //         {
+    //             // TODO: Add the data corrresponding to the user. This wil be shared among all the users.
+    //             path: "settings",
+    //             element: <Settings />
+    //         }
+
+    //     ],
+    //     // loader: requireAuth(['student', 'professor', 'admin', 'superadmin']),
+    // },
     {
         path: "/professor/dashboard",
         element: <Dashboard />,

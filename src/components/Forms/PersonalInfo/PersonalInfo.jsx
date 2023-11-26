@@ -1,27 +1,69 @@
-// TODO: Determine controlIDs for each form field, and then configure react-form
-// TODO: Determine the required files, and activate validation
+// TODO: Add another phone field in the user_profile model
 // TODO: What do we think if we install this -> https://www.npmjs.com/package/react-phone-number-input ?
+// TODO: the first click on the send button, once the fields are filled, does not send the data. The second click does.
+// Maybe we could validate verityfing if the object has the neccesary fields to send. Make this as an external function
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 import "./PersonalInfo.css"
 
-export default function PersonalInfo() {
+// import { newUserToSignUp } from "../../../utils/constants";
+import { getDepartments, getCitiesByDepartmentId } from "../../../api/utils";
+
+export default function PersonalInfo({ personalInfoToSubmit }) {
+    const { register, handleSubmit } = useForm();
+    const [departments, setDepartments] = useState([]);
+    const [cities, setCities] = useState([]);
+
+    useEffect(() => {
+        const loadDeapartments = async () => {
+            const departments = await getDepartments();
+            setDepartments(departments);
+        }
+        loadDeapartments();
+    },
+        []);
+
+    const handleCitiesBasedOnDepartment = (e) => {
+        getCitiesByDepartmentId(e.target.value).then((cities) => {
+            if (cities.length > 0) {
+                setCities(cities);
+            }
+        });
+    }
+
+    const onSubmit = (data) => {
+        if (Object.keys(data).length > 0) {
+            if (!Object.keys(data).includes("home_phone_number")) data.home_phone_number = "";
+            const allFieldsFilled = Object.values(data).every(x => (x !== null && typeof x !== "undefined"));
+            if (allFieldsFilled) {
+                data.address = departments.find(department => department.id === parseInt(data.location.department)).name.toUpperCase() + "-" + cities.find(city => city.id === parseInt(data.location.city)).name.toUpperCase() + "-" + data.location.address;
+                delete data.location;
+                console.log("PERSONALINFO - Data ready to submit");
+                alert("Información personal guardada exitosamente!");
+                personalInfoToSubmit(data);
+            }
+        }
+    };
+    const onError = (errors, e) => console.log("PERSONLANFO - Error while trying to register: ", errors, e);
+
     return (
-        <Form className='form-container'>
+        <Form className='form-container' onSubmit={handleSubmit(onSubmit, onError)}>
             <Row className='py-4'>
-                <Col xs={12} md={8} lg={8}>
+                <Col xs={12} md={6} lg={6}>
                     <h4><strong>Información personal</strong></h4>
                     <Form.Group>
-                        <Form.Label><strong>Cedula/identificación</strong></Form.Label>
+                        <Form.Label>Cedula/identificación</Form.Label>
                         <div className='d-flex'>
-                            <Form.Control type="number" placeholder='Ej: 1004718953' className='flex-grow-1' />
-                            <Form.Select aria-label="Default select example" className="w-25">
+                            <Form.Control type="number" placeholder='Ej: 1004718953' className='flex-grow-1' {...register("identification_number", { required: true })} />
+                            <Form.Select className="w-25 text-center" defaultValue="1" {...register("identification_type", { required: true })} required>
                                 <option>Tipo</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="1">CC</option>
+                                <option value="2">TI</option>
                             </Form.Select>
                         </div>
                         <label className='text-muted'>Sin puntos, comas. Solo números</label>
@@ -36,14 +78,14 @@ export default function PersonalInfo() {
                         <Col>
                             <Form.Group>
                                 <Form.Label>Primer nombre</Form.Label>
-                                <Form.Control type="text" placeholder="Ej: Miguel" />
+                                <Form.Control type="text" placeholder="Ej: Miguel" {...register("first_name", { required: true })} required />
                                 <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
                                 <Form.Label>Segundo nombre</Form.Label>
-                                <Form.Control type="text" placeholder="Ej: Angel" />
+                                <Form.Control type="text" placeholder="Ej: Angel" {...register("middle_name", { required: true })} required />
                                 <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
@@ -52,14 +94,14 @@ export default function PersonalInfo() {
                         <Col>
                             <Form.Group>
                                 <Form.Label>Primer apellido</Form.Label>
-                                <Form.Control type="text" placeholder="Ej: Lopez" />
+                                <Form.Control type="text" placeholder="Ej: Lopez" {...register("last_name", { required: true })} required />
                                 <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
                                 <Form.Label>Segundo apellido</Form.Label>
-                                <Form.Control type="text" placeholder="Ej: Fernandez" />
+                                <Form.Control type="text" placeholder="Ej: Fernandez" {...register("second_last_name", { required: true })} required />
                                 <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
@@ -74,33 +116,31 @@ export default function PersonalInfo() {
                         <Col>
                             <Form.Group>
                                 <Form.Label>Departamento</Form.Label>
-                                <Form.Select aria-label="Default select example" >
-                                    <option>Tipo</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <Form.Select aria-label="Default select example" controlId="location-department-select" {...register("location.department", { required: true })} required onChange={handleCitiesBasedOnDepartment}>
+                                    <option value="">Departamento</option>
+                                    {departments.map((department) => {
+                                        return <option key={department.id} value={department.id}>{department.name}</option>
+                                    })}
                                 </Form.Select>
-                                <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
                                 <Form.Label>Ciudad</Form.Label>
-                                <Form.Select aria-label="Default select example" >
-                                    <option>Tipo</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <Form.Select aria-label="Default select example" {...register("location.city", { required: true })} required>
+                                    <option>Ciudad</option>
+                                    {cities.map((city) => {
+                                        return <option key={city.id} value={city.id}>{city.name}</option>
+                                    })}
                                 </Form.Select>
-                                <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
                     </Row>
                     <Row className='py-2'>
                         <Col>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Group className="mb-3" >
                                 <Form.Label>Descripción de dirección de domicilio</Form.Label>
-                                <Form.Control as="textarea" />
+                                <Form.Control as="textarea" {...register("location.address", { required: true })} required />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -117,13 +157,13 @@ export default function PersonalInfo() {
                                     <Form.Label>Telefono</Form.Label>
                                     <label className='text-muted'>&emsp;(opcional)</label>
                                 </div>
-                                <Form.Control type="text" placeholder="Ej: 346 2047" />
+                                <Form.Control type="text" placeholder="Ej: 346 2047" {...register("home_phone_number")} />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group>
                                 <Form.Label>Celular</Form.Label>
-                                <Form.Control type="text" placeholder="Ej: 3218484132" />
+                                <Form.Control type="text" placeholder="Ej: 3218484132" {...register("personal_phone_number", { required: true })} required />
                                 <label className='text-muted'>Evite el uso de tildes u otros símbolos de puntuación</label>
                             </Form.Group>
                         </Col>
@@ -135,4 +175,8 @@ export default function PersonalInfo() {
             </Row>
         </Form>
     )
+}
+
+PersonalInfo.propTypes = {
+    personalInfoToSubmit: PropTypes.func,
 }

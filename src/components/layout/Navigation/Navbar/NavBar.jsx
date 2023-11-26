@@ -8,7 +8,7 @@ import './NavBar.css';
 
 function NavBar() {
     return (
-        <Navbar expand="lg" className="bg-body-tertiary px-5">
+        <Navbar expand="lg" id="homeNavBar" className="bg-body-tertiary px-5 border border-1">
             <Container fluid>
                 <Navbar.Brand href="#">
                     Logo

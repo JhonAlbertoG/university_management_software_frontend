@@ -1,4 +1,11 @@
-// import { useState } from "react"
+/*
+#TODO: Arreglar imagen-banner, disminuir el width de la imagen
+#TODO: Arreglar posts, copiar algunos de htttp://www.utp.edu.co/
+#TODO: Escoger paleta de colores mas viva, o en su defecto copiar la de la universidad
+#TODO: Agreagr logos
+#TODO: Determinar si hay iconos por agregar. De ser que sí, agregarlos
+#TODO: Agregar paginas-modales para Atención al ciudadano, PQRS, y contacto. Preguntar a chat por pantilla para esto. 
+ */
 import Image from "react-bootstrap/Image"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -8,7 +15,6 @@ import './styles/home.css'
 import PostCard from "./PostCard"
 import Footer from "../../components/layout/Footer/Footer"
 import NavBar from "../../components/layout/Navigation/Navbar/NavBar"
-
 
 export default function Landing() {
   // Delete this when we are consuming the API
@@ -21,8 +27,9 @@ export default function Landing() {
       <NavBar />
       <Row>
         {/* Big image */}
-        <Col className="border border-1 cover">
-          <Image src="https://picsum.photos/1366/480" fluid />
+        <Col className="cover">
+          {/* <Image src="https://picsum.photos/1366/480" fluid /> */}
+          <Image src="src/assets/img/banner.jpg" fluid />
         </Col>
       </Row>
       <Row id="courses-info" className="justify-content-center">

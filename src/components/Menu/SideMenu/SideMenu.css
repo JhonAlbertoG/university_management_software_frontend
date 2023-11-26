@@ -36,6 +36,10 @@ label {
     border-top: solid 1px #444444;
 }
 
+#logout-btn {
+    font-size: 1.15em;
+}
+
 /* .options>*:hover {
     background-color: rgba(220, 220, 220, 0.238);
 } */
