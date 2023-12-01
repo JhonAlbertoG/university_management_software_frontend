@@ -1,5 +1,5 @@
-// import Row from "react-bootstrap/Row"
-// import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 
 
 import { Outlet } from "react-router-dom"
@@ -15,17 +15,17 @@ export default function Dashboard() {
         return <div>Cargando...</div>;
     }
     return (
-        <div id="page-container" className="d-flex">
-            <SideMenu />
-            <div className="d-flex flex-column flex-grow-1">
+        <Row id="dashboard-container" className="p-0">
+            <Col xs={12} md={2} lg={2} xxl={2} className="p-0">
+                <SideMenu />
+            </Col>
+            <Col xs={12} md={10} lg={10} xxl={10} className="d-flex flex-column p-0">
                 <AuthenticatedHeader user={user} />
-                <div className="dashboard-main-container flex-grow-1">
-                    <div id="dashboard-main-subcontainer">
-                        <Outlet context={user.role} />
-                    </div>
+                <div className="dashboard-main-container d-flex justify-content-center flex-grow-1">
+                    <Outlet context={user.role} />
                 </div>
-            </div>
-        </div>
+            </Col>
+        </Row>
     )
 
 }

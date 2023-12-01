@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
 import { login } from "../../api/auth";
-import { getUserById } from "../../api/users";
+import { getUserByIdentificationNumber } from "../../api/users";
 import { useAuth } from "../../context/auth/useAuth";
 import { rolesMappping } from "../../utils/constants";
 
@@ -28,21 +28,17 @@ export default function LoginForm() {
                         "access_token": tokens.access,
                         "user_identification_number": data.username,
                     };
-                    getUserById(userCredentialsAndToken).then((user) => {
+                    getUserByIdentificationNumber(userCredentialsAndToken).then((user) => {
                         let userIndexInfo = {
                             'identification_number': user.identification_number,
                             "role": user.role_id
                         };
                         localStorage.clear();
-                        // localStorage.setItem('role', userIndexInfo.role);
-                        // localStorage.setItem('identification_number', userIndexInfo.identification_number);
-                        // // Add the tokens to the local storage
-                        // localStorage.setItem('access_token', tokens.access);
-                        // localStorage.setItem('refresh_token', tokens.refresh);
+
                         // Set the expiration time of the access token to 29 minutes, even tough the token expires in 30 minutes
                         let access_token_expiracy = Date.now() + 1790 * 1000;
-                        // localStorage.setItem('access_token_expiracy', access_token_expiracy);
                         tokens.access_token_expiracy = access_token_expiracy;
+
                         // Update the user context
                         loginContext(Object.assign(tokens, userIndexInfo));
                         // Redirect to the home page

@@ -1,0 +1,23 @@
+#professor-grades-container {
+    /* border-radius: 16px;
+    background-color: white; */
+    height: 100vh;
+    width: 85%;
+    overflow-y: scroll;
+}
+
+#student-grades-container {
+    height: 100vh;
+    width: 80%;
+}
+
+/* #grades-container>div {
+    padding-left: 40px;
+    padding-right: 40px;
+} */
+
+#subjects-groups,
+#evaluation-plan,
+#students-notes-handler {
+    border-radius: 16px;
+}

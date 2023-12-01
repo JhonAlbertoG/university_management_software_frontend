@@ -13,10 +13,12 @@ export default function Settings() {
     }
 
     return (
-        <Row id="settings-container" className="px-5 justify-content-center">
-            <Col md={10} lg={10} className="personal-info-container pe-4 h-100" >
-                <PersonalInfo personalInfoToSend={handlePersonalInfo} />
-            </Col>
-        </Row>
+        <div id="settings-container" className="mt-4 py-4">
+            <Row className="px-4 justify-content-center overflow-y-auto h-100">
+                <Col md={10} lg={10} className="overflow-y-auto pe-4" >
+                    <PersonalInfo personalInfoToSend={handlePersonalInfo} />
+                </Col>
+            </Row>
+        </div>
     )
 }

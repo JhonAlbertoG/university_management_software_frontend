@@ -11,6 +11,7 @@ import "./SideMenu.css"
 import { logout } from "../../../api/users";
 import { useAuth } from "../../../context/auth/useAuth";
 import { changeSideMenuIconsColorOnMouseEnterLeave } from "../../../utils/Styles";
+import { getTokenKeyName } from "../../../utils/functions"
 
 function getURLPathname(currentPatName, redirectionPathname) {
     let newPathname = currentPatName.split("/").slice(0, 3).join("/") + redirectionPathname;
@@ -22,10 +23,10 @@ export default function SideMenu() {
     const navigate = useNavigate();
     const { logoutContext, user } = useAuth();
     const handleLogout = () => {
-        console.log("Logging out...: ", user);
+        console.log("Logging out...: ");
         // The user.refresh and user.access fields are used here because they are passed in the login process, once the user logs in and the tokens are created
         // Do not confuse with the tokens stored in local storage. Remember that user is the prop that is updated to be used globally
-        logout({ refresh: user.refresh, access: user.access });
+        logout({ refresh: user[getTokenKeyName(Object.keys(user), "refresh")], access: user[getTokenKeyName(Object.keys(user), "access")] });
         logoutContext();
         navigate("/");
     }

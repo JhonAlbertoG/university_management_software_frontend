@@ -1,5 +1,6 @@
 #menu-container {
     background-color: rgb(0, 0, 0);
+    height: 100%;
 }
 
 #options>* {
@@ -11,9 +12,6 @@
     padding-bottom: 15px;
 }
 
-/* .schedule-icon-link .evaluation-icon-link .user-icon-link {
-    color: #8c8c8d !important;
-} */
 
 a {
     text-decoration: none !important;
@@ -39,11 +37,3 @@ label {
 #logout-btn {
     font-size: 1.15em;
 }
-
-/* .options>*:hover {
-    background-color: rgba(220, 220, 220, 0.238);
-} */
-
-/* #logout-option:hover {
-    background-color: rgba(220, 220, 220, 0.238);
-} */

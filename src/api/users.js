@@ -22,7 +22,7 @@ export const signup = async (user) => {
 
 }
 
-export const getUserById = async (user) => {
+export const getUserByIdentificationNumber = async (user) => {
     try {
         const response = await fetch(URL + user.user_identification_number + "/", {
             method: "GET",
@@ -41,10 +41,29 @@ export const getUserById = async (user) => {
         console.log(error);
     }
 }
+export const getUserById = async (id, token) => {
+    try {
+        const response = await fetch(URL + id + "/user_by_id/", {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error("Invalid token or id: ", response);
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
 export const logout = async (tokens) => {
     try {
-        console.log(tokens)
         const response = await fetch(URL + "logout/", {
             method: "POST",
             headers: {

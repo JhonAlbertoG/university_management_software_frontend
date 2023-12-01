@@ -1,0 +1,25 @@
+#table-container {
+    height: 40%;
+    overflow-y: scroll;
+}
+
+#calendar {
+    border-collapse: collapse;
+}
+
+#calendar th,
+#calendar td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+#calendar th {
+    background-color: #f2f2f2;
+}
+
+.activity {
+    background-color: rgb(90, 156, 255) !important;
+    /* Color para las actividades */
+    color: white !important;
+}

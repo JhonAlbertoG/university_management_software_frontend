@@ -24,18 +24,21 @@ export const login = async (credentials) => {
 
 export const refreshToken = async (token) => {
     try {
-        const response = await fetch(URL + "refresh/", {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${token.access_token}`
-            },
-            body: JSON.stringify(token.refresh_token),
-        });
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        } else {
-            throw new Error("Invalid Token: ", response.status);
+        if (token === null) { return null; }
+        else {
+            const response = await fetch(URL + "refresh/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ "refresh": token }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                throw new Error("Invalid Token: ", response.status);
+            }
         }
     }
     catch (error) {

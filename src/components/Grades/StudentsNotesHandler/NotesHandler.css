@@ -1,0 +1,31 @@
+#student-note-info {
+    height: 40%;
+}
+
+#notes-by-plan {
+    height: 100%;
+}
+
+.notes-handler {
+    border-radius: 16px;
+}
+
+#note-status {
+    background-color: rgb(111, 198, 24);
+    border-radius: 16px;
+    border: 1px solid black
+}
+
+#note-manage-area {
+    border: 1px dashed gainsboro;
+    border-radius: 12px;
+}
+
+#note-name {
+    width: 100px;
+}
+
+#note-input {
+    width: 50%;
+    height: 100%;
+}

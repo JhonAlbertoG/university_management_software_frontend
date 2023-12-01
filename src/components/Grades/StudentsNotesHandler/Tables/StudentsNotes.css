@@ -1,0 +1,8 @@
+#students-info-table {
+    height: 80%;
+    overflow-y: scroll;
+}
+
+#student-notes {
+    border-radius: 16px;
+}

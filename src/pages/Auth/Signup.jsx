@@ -47,7 +47,7 @@ export default function Signup() {
                 signup(newUser).then((response) => {
                     alert("Usuario registrado exitosamente ", response);
                     // Navigate to /login
-                    // navigate("/login");
+                    navigate("/login");
                 });
                 setPersonalInfo({});
             }

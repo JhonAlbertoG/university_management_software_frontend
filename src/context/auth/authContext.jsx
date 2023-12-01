@@ -21,8 +21,9 @@ export const AuthProvider = ({ children }) => {
             setUser(storedUser);
             // Intervalo para verificar la necesidad de refrescar el token
             const interval = setInterval(() => {
-                if (user && new Date(user.access_token_expiracy) - new Date() < 60000) { // 60 segundos antes de la expiración
-                    refreshToken();
+                console.log("why refreshing token is not working: ", storedUser && new Date(storedUser.access_token_expiracy) - new Date() < 60000)
+                if (storedUser && new Date(storedUser.access_token_expiracy) - new Date() < 60000) { // 60 segundos antes de la expiración
+                    refreshToken(storedUser.refresh_token);
                 }
             }, 60000); // Verificar cada 60 segundos
 
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
 
     };
+
 
     return (
         <AuthContext.Provider value={{ user, isLoading, loginContext, logoutContext }}>
