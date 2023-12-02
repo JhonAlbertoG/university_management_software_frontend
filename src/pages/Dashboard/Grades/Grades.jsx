@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import SubjectsGroups from "../../../components/Grades/SubjectsGroups/SubjectsGroups";
 import EvaluationPlan from "../../../components/Grades/EvaluationPlan/EvaluationPlan";
 import StudentsNotes from "../../../components/Grades/StudentsNotesHandler/Tables/StudentsNotes";
+import StudentsNotesStudent from "../../../components/Grades/StudentsNotesHandler/Tables/StudentsNotesStudent";
 import NotesHandlerModal from "../../../components/Grades/StudentsNotesHandler/NotesHandlerModal";
 // import Pagination from "../../../components/Pagination/pagination";
 import "./Grades.css";
@@ -238,7 +239,17 @@ export default function Grades() {
     } else {
         return (
             <div id="student-grades-container" className="mt-4">
-                <div>Pending for implementation from Jhon Alberto</div>
+                <div id="professor-grades-container" className="mt-4">
+                
+                <Row className="h-50 justify-content-around mt-4">
+                    {/* Students Notes */}
+                    <Col className="h-100" xs={12} md={11} lg={11}>
+                        {/* TODO: Make the clickeds student functionality */}
+                        <StudentsNotesStudent students={students ? students : []} notes={studentsGrades ? studentsGrades : []} gradesDef={gradesDefinitions} showStudent={handleShow} />
+                    </Col>
+                </Row>
+                <NotesHandlerModal show={show} handleClose={handleClose} />
+            </div>
             </div>
         )
     }

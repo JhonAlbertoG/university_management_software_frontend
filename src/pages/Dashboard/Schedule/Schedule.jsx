@@ -4,6 +4,7 @@ import SubjectModal from '../../../components/Subject/SubjectModal/SubjectModal'
 import WeeklySchedule from '../../../components/Schedule/WeeklySchedule/WeeklySchedule';
 import SubjectsGroups from '../../../components/Grades/SubjectsGroups/SubjectsGroups';
 import "./Schedule.css"
+import { rolesMappping } from "../../../utils/constants";
 
 import { useAuth } from '../../../context/auth/useAuth';
 import { getGroupsByIdentificationNumber } from "../../../api/usersInGroups";
@@ -43,9 +44,45 @@ export default function Schedule() {
         const fetchGroups = async () => {
             // console.log("GRADES - user ", user);
             // TODO: Add the logic for students. The actual is for professors.
-            const groupsRes = await getGroupsByIdentificationNumber(user.identification_number, user[getTokenKeyName(Object.keys(user), "access")]);
-            // Fetch subject by group id
-            if (typeof groupsRes !== "undefined") {
+            if (rolesMappping[user.role] === "professor"){
+                const groupsRes = await getGroupsByIdentificationNumber(user.identification_number, user[getTokenKeyName(Object.keys(user), "access")]);
+                // Fetch subject by group id
+                if (typeof groupsRes !== "undefined") {
+                    let formattedGroups = formatGroupsRes(groupsRes.groups);
+                    let usersByGroupId = {};
+                    for (let group of Object.keys(formattedGroups)) {
+                        const fetchUsers = formattedGroups[group].map(async (userInGroup) => {
+                            const userInfo = await getUserById(userInGroup.user_id, user[getTokenKeyName(Object.keys(user), "access")]);
+                            return { userInfo };
+                        });
+
+                        usersByGroupId[group] = await Promise.all(fetchUsers);
+                    }
+                    const subjectsByGroupsId = Object.keys(formattedGroups).map(async (group_id) => {
+                        const subject = await getSubjectByGroupId(group_id, user[getTokenKeyName(Object.keys(user), "access")]);
+                        return { group_id, subject };
+                    });
+                    const groupsWithSubjects = await Promise.all(subjectsByGroupsId);
+
+                    let groupsWithSubjectAndUsersOnLoad = setAllResInOneElement(formattedGroups, groupsWithSubjects, usersByGroupId);
+                    setGroupsWithSubjectAndUsers(groupsWithSubjectAndUsersOnLoad);
+                    console.log("SCHEDULE - groupsWithSubjectAndUsersOnLoad: ", groupsWithSubjectAndUsersOnLoad);
+
+                    const classesInGroupsRes = Object.keys(formattedGroups).map(async (group_id) => {
+                        const classes = await getClassesInGroup(group_id, user[getTokenKeyName(Object.keys(user), "access")]);
+                        return { group_id, classes };
+                    });
+                    const classesInGroups = await Promise.all(classesInGroupsRes);
+                    classesInGroups.forEach((classInGroup) => {
+                        classInGroup.subjectName = groupsWithSubjects.find((groupWithSubject) => groupWithSubject.group_id === classInGroup.group_id).subject.name;
+                    })
+
+                    console.log("SCHEDULE - classesInGroups: ", classesInGroups);
+                    console.log("SCHEDULE - groupsWithSubject: ", groupsWithSubjects);
+                    setClassesInGroups(classesInGroups);
+                }
+                
+            }else if (rolesMappping[user.role] === "student"){
                 let formattedGroups = formatGroupsRes(groupsRes.groups);
                 let usersByGroupId = {};
                 for (let group of Object.keys(formattedGroups)) {
@@ -56,29 +93,8 @@ export default function Schedule() {
 
                     usersByGroupId[group] = await Promise.all(fetchUsers);
                 }
-                const subjectsByGroupsId = Object.keys(formattedGroups).map(async (group_id) => {
-                    const subject = await getSubjectByGroupId(group_id, user[getTokenKeyName(Object.keys(user), "access")]);
-                    return { group_id, subject };
-                });
-                const groupsWithSubjects = await Promise.all(subjectsByGroupsId);
-
-                let groupsWithSubjectAndUsersOnLoad = setAllResInOneElement(formattedGroups, groupsWithSubjects, usersByGroupId);
-                setGroupsWithSubjectAndUsers(groupsWithSubjectAndUsersOnLoad);
-                console.log("SCHEDULE - groupsWithSubjectAndUsersOnLoad: ", groupsWithSubjectAndUsersOnLoad);
-
-                const classesInGroupsRes = Object.keys(formattedGroups).map(async (group_id) => {
-                    const classes = await getClassesInGroup(group_id, user[getTokenKeyName(Object.keys(user), "access")]);
-                    return { group_id, classes };
-                });
-                const classesInGroups = await Promise.all(classesInGroupsRes);
-                classesInGroups.forEach((classInGroup) => {
-                    classInGroup.subjectName = groupsWithSubjects.find((groupWithSubject) => groupWithSubject.group_id === classInGroup.group_id).subject.name;
-                })
-
-                console.log("SCHEDULE - classesInGroups: ", classesInGroups);
-                console.log("SCHEDULE - groupsWithSubject: ", groupsWithSubjects);
-                setClassesInGroups(classesInGroups);
             }
+            
         }
         fetchGroups();
     }, [])
