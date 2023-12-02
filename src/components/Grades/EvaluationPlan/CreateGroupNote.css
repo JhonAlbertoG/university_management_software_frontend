@@ -1,0 +1,9 @@
+#group-note-percentage {
+    width: 100px;
+}
+
+#notes-def-container {
+    /* width: 100%; */
+    height: 250px;
+    overflow-y: scroll;
+}

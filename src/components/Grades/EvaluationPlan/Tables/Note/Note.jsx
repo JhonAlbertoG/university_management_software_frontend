@@ -1,37 +1,38 @@
+import { AiOutlinePercentage } from "react-icons/ai";
+import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import "./Note.css";
 
-export default function Note() {
+export default function Note({ notesDef }) {
     return (
-        <Table striped="columns" responsive>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    {Array.from({ length: 2 }).map((_, index) => (
-                        <th key={index}>heading</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    {Array.from({ length: 2 }).map((_, index) => (
-                        <td key={index}>cell {index}</td>
-                    ))}
-                </tr>
-                <tr>
-                    <td>2</td>
-                    {Array.from({ length: 2 }).map((_, index) => (
-                        <td key={index}>cell {index}</td>
-                    ))}
-                </tr>
-                <tr>
-                    <td>3</td>
-                    {Array.from({ length: 2 }).map((_, index) => (
-                        <td key={index}>cell {index}</td>
-                    ))}
-                </tr>
-            </tbody>
-        </Table>
+        <div id="notes-container">
+            <Table id="right-notes-def-table" striped="columns" responsive>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>
+                            <AiOutlinePercentage />
+                            en grupo
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {notesDef.map((note, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{note.id}</td>
+                                <td>{note.name}</td>
+                                <td>{note.percentage_in_group}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </Table>
+        </div>
+
     )
+}
+Note.propTypes = {
+    notesDef: PropTypes.arrayOf(PropTypes.any)
 }

@@ -100,3 +100,94 @@ export const formattGroupClassesToshow = (classes) => {
     return formattedClasses
 
 }
+
+
+
+export const addNote = () => {
+    var notesContainerDocObj = document.getElementById('notes-def-container');
+    var numDivs = notesContainerDocObj.children.length;
+    var idDiv = 'div_' + numDivs;
+
+    var newNote = document.createElement('div');
+    newNote.className = 'note-specs d-flex my-2';
+    newNote.id = idDiv;
+
+    var noteName = document.createElement('input');
+    noteName.type = 'text';
+    noteName.className = 'form-control mx-2 note-name-input';
+
+
+    var notePercentage = document.createElement('input');
+    notePercentage.type = 'number';
+    notePercentage.className = 'form-control mx-2 w-25 note-percentage-input';
+
+    var deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'X';
+    deleteBtn.className = 'deleteBtn btn btn-danger text-white';
+    deleteBtn.onclick = function () {
+        notesContainerDocObj.removeChild(newNote);
+    };
+
+    newNote.appendChild(noteName);
+    newNote.appendChild(notePercentage);
+    newNote.appendChild(deleteBtn);
+
+    notesContainerDocObj.appendChild(newNote);
+
+}
+
+export const getAddedNotes = () => {
+    var contenedor = document.getElementById('notes-def-container');
+    if (contenedor !== null) {
+
+        var divs = contenedor.getElementsByClassName('note-specs');
+        var resultados = {};
+        for (var i = 0; i < divs.length; i++) {
+            var idDiv = divs[i].id.split('_')[1]; // Obtiene el número del ID
+
+            var nameInput = divs[i].getElementsByClassName('note-name-input')[0];
+            var percentageInputs = divs[i].getElementsByClassName('note-percentage-input')[0];
+
+            var nameValue = nameInput.value; // Valor del primer input
+            var percentageValue = parseFloat(percentageInputs.value).toFixed(2); // Valor del segundo input
+
+            resultados[idDiv] = {
+                'name': nameValue,
+                'percentage_in_group': parseFloat(percentageValue).toFixed(2)
+            };
+        }
+
+        return resultados;
+    }
+    else {
+        return {}
+    }
+}
+
+export const deleteHeaders = (idTabla, textosCabeceras) => {
+    var cabeceras = document.querySelectorAll('#' + idTabla + ' thead th');
+    cabeceras.forEach(function (cabecera) {
+        if (!textosCabeceras.includes(cabecera.textContent)) {
+            cabecera.remove();
+        }
+    });
+}
+
+
+export const cleanTable = (idTabla) => {
+    var registros = document.querySelector('#' + idTabla + ' tbody');
+    if (typeof registros !== "undefined" && registros !== null) {
+        while (registros.firstChild) {
+            registros.removeChild(registros.firstChild);
+        }
+    }
+}
+
+
+export function compareTwoObjects(newInfo, fetchedInfo) {
+    console.log("Información actualizada: ", newInfo)
+    console.log("Información fetcheada: ", fetchedInfo)
+    return JSON.stringify(newInfo) !== JSON.stringify(fetchedInfo) ? true : false
+}
+
+

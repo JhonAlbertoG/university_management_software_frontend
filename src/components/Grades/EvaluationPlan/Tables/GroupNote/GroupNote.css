@@ -1,0 +1,5 @@
+#notes-def-table-container {
+    overflow-y: scroll;
+    border: 5px dashed #d2d2d2;
+    border-radius: 12px;
+}

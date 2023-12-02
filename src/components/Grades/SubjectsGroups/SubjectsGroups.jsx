@@ -17,7 +17,6 @@ export default function SubjectsGroups({ groups, clickedSubjectAndGroup, askedBy
     const listedGroups = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PAGESIZE_EVALUATION;
         const lastPageIndex = firstPageIndex + PAGESIZE_EVALUATION;
-        console.log("from use memeo:", groups)
         if (clickedSubject !== null && groups.length > 0) {
 
             if (groups[clickedSubject].groups.length > 0) {

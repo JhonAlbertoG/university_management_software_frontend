@@ -58,7 +58,7 @@ export default function Signup() {
             <NavBar />
             <Row className="p-5 justify-content-center">
                 <Col xs={12} sm={12} md={6} lg={6} className="personal-info-container pe-4" >
-                    <PersonalInfo personalInfoToSubmit={setPersonalInfo} />
+                    <PersonalInfo personalInfoToSubmit={setPersonalInfo} type="signup" />
                 </Col>
                 <Col xs={12} sm={12} md={3} lg={3} className="ps-4" >
                     <Credential registration={handleRegistration} />

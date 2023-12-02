@@ -42,6 +42,7 @@ export const getUserByIdentificationNumber = async (user) => {
     }
 }
 export const getUserById = async (id, token) => {
+
     try {
         const response = await fetch(URL + id + "/user_by_id/", {
             method: "GET",
@@ -61,6 +62,7 @@ export const getUserById = async (id, token) => {
         console.log(error);
     }
 }
+
 
 export const logout = async (tokens) => {
     try {
@@ -83,4 +85,28 @@ export const logout = async (tokens) => {
         console.log(error);
     }
 
+}
+
+
+export const partialUpdateUser = async (user, token) => {
+    console.log(user);
+    try {
+        const response = await fetch(URL + user.id + "/", {
+            method: "PATCH",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user),
+        });
+        if (response.ok) {
+            const data = await response.text();
+            return data;
+        } else {
+            throw new Error("Invalid Credentials: ", response.status, response.statusText);
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
 }

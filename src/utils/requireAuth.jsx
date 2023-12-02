@@ -11,7 +11,6 @@ export const requireAuth = (roles) => async ({ request, params }) => {
         user_identification_number: localStorage.getItem('identification_number')
     };
 
-    console.log("storedUser", storedUser);
     const user = Object.keys(storedUser).every(
         key =>
             storedUser[key] !== null &&

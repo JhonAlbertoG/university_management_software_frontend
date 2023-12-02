@@ -138,13 +138,13 @@ export default function SubjectModal({ show, handleClose, subject }) {
             </Modal>
         );
     }
-    else {
-        console.log("no se muestra")
-    }
+    // else {
+    //     console.log("no se muestra")
+    // }
 }
 
 SubjectModal.propTypes = {
     show: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
-    subject: PropTypes.object.isRequired
+    subject: PropTypes.object
 };
